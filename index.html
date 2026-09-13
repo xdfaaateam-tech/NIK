@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identifikasi & Generator NIK — XDFAA TEAM.ID</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+  :root{
+    --bg-top:#050818;
+    --card:rgba(30,38,72,.55);
+    --line:rgba(180,200,255,.16);
+    --line-strong:rgba(180,200,255,.28);
+    --text:#f0f4ff;
+    --muted:#a8b4d8;
+    --muted2:#6d7ba0;
+    --accent:#8bb4ff;
+    --accent2:#b8e0ff;
+    --moon:#fff4d6;
+    --moon-glow:#ffe9a8;
+    --danger:#ff7a8a;
+    --warn:#ffc266;
+    --prov:#8bb4ff;
+    --kab:#b29dff;
+    --kec:#e0a8ff;
+    --pos:#7ee8c8;
+    --dd:#ffa8c8;
+    --mm:#ffc266;
+    --yy:#7ee8c8;
+    --seq:#a8b4d8;
+    --ig1:#f09433;
+    --ig2:#e6683c;
+    --ig3:#dc2743;
+    --ig4:#cc2366;
+    --ig5:#bc1888;
+    --xdfaa:#8bb4ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:linear-gradient(180deg,
+      #050818 0%, #0a1230 22%, #1a1f4a 48%,
+      #2a2455 72%, #3d2e5c 90%, #4a3560 100%);
+    background-attachment:fixed;
+    color:var(--text); min-height:100vh;
+    padding:44px 16px 90px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ============================================================
+     LANGIT
+     ============================================================ */
+  .sky{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden}
+
+  .moon{
+    position:absolute;top:60px;right:8%;
+    width:110px;height:110px;border-radius:50%;
+    background:radial-gradient(circle at 35% 32%,
+      #fffdf2 0%, #fff4d6 35%, #ffe9a8 65%, #f5cf7a 100%);
+    box-shadow:
+      0 0 40px 10px rgba(255,233,168,.55),
+      0 0 90px 30px rgba(255,233,168,.28),
+      0 0 160px 60px rgba(255,220,140,.15),
+      inset -14px -10px 22px rgba(180,150,90,.35);
+    animation:moonGlow 6s ease-in-out infinite;
+  }
+  .moon::after{
+    content:'';position:absolute;top:22%;left:20%;
+    width:22px;height:22px;border-radius:50%;
+    background:rgba(190,170,110,.28);filter:blur(3px);
+  }
+  .moon::before{
+    content:'';position:absolute;top:52%;left:56%;
+    width:16px;height:16px;border-radius:50%;
+    background:rgba(190,170,110,.22);filter:blur(2px);
+  }
+  @keyframes moonGlow{
+    0%,100%{box-shadow:0 0 40px 10px rgba(255,233,168,.55),0 0 90px 30px rgba(255,233,168,.28),0 0 160px 60px rgba(255,220,140,.15),inset -14px -10px 22px rgba(180,150,90,.35)}
+    50%{box-shadow:0 0 55px 16px rgba(255,233,168,.7),0 0 110px 40px rgba(255,233,168,.35),0 0 190px 80px rgba(255,220,140,.2),inset -14px -10px 22px rgba(180,150,90,.35)}
+  }
+
+  .stars{position:absolute;inset:0}
+  .star{
+    position:absolute;width:2px;height:2px;
+    background:#fff;border-radius:50%;
+    box-shadow:0 0 6px 1px rgba(255,255,255,.9);
+    animation:twinkle 3s ease-in-out infinite;
+  }
+  .star.big{width:3px;height:3px;box-shadow:0 0 10px 2px rgba(255,255,255,.95)}
+  .star.blue{background:#c8d8ff;box-shadow:0 0 6px 1px rgba(200,216,255,.9)}
+  .star.gold{background:#fff4d6;box-shadow:0 0 8px 2px rgba(255,233,168,.9)}
+  @keyframes twinkle{
+    0%,100%{opacity:.25;transform:scale(.85)}
+    50%{opacity:1;transform:scale(1.15)}
+  }
+
+  .cloud{
+    position:absolute;height:60px;border-radius:60px;
+    background:radial-gradient(ellipse at center, rgba(180,190,240,.14), rgba(180,190,240,.03) 65%, transparent 75%);
+    filter:blur(14px);
+    animation:drift 60s linear infinite;
+  }
+  .cloud::before, .cloud::after{content:'';position:absolute;border-radius:50%;background:inherit}
+  .cloud.c1{top:22%;left:-20%;width:340px}
+  .cloud.c1::before{top:-22px;left:60px;width:120px;height:80px}
+  .cloud.c1::after{top:-14px;left:170px;width:90px;height:70px}
+  .cloud.c2{top:48%;left:-30%;width:420px;animation-duration:80s;animation-delay:-20s}
+  .cloud.c2::before{top:-26px;left:80px;width:150px;height:95px}
+  .cloud.c2::after{top:-18px;left:220px;width:110px;height:80px}
+  .cloud.c3{top:68%;left:-25%;width:300px;animation-duration:70s;animation-delay:-40s;opacity:.7}
+  .cloud.c3::before{top:-20px;left:50px;width:100px;height:70px}
+  .cloud.c3::after{top:-12px;left:150px;width:80px;height:60px}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(140vw)}}
+
+  .shoot{
+    position:absolute;width:120px;height:1.5px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.85));
+    border-radius:2px;
+    animation:shoot 6s linear infinite;
+    opacity:0;
+  }
+  .shoot::after{
+    content:'';position:absolute;right:0;top:-1.5px;
+    width:5px;height:5px;border-radius:50%;
+    background:#fff;box-shadow:0 0 12px 3px rgba(255,255,255,.95);
+  }
+  .shoot.s1{top:15%;left:10%;animation-delay:0s}
+  .shoot.s2{top:35%;left:60%;animation-delay:3s}
+  .shoot.s3{top:8%;left:40%;animation-delay:9s}
+  @keyframes shoot{
+    0%{opacity:0;transform:translate(0,0) rotate(35deg)}
+    10%{opacity:1}
+    30%{opacity:0;transform:translate(500px,350px) rotate(35deg)}
+    100%{opacity:0;transform:translate(500px,350px) rotate(35deg)}
+  }
+
+  .mountains{
+    position:fixed;bottom:0;left:0;right:0;height:180px;z-index:-2;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 100% at 20% 100%, #1a1440 0%, transparent 70%),
+      radial-gradient(ellipse 55% 100% at 55% 100%, #221a4a 0%, transparent 70%),
+      radial-gradient(ellipse 65% 100% at 85% 100%, #1a1440 0%, transparent 70%);
+    opacity:.85;
+    mask-image:linear-gradient(180deg,transparent 0%, #000 45%, #000 100%);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%, #000 45%, #000 100%);
+  }
+
+  .aurora{
+    position:fixed;bottom:0;left:0;right:0;height:340px;z-index:-1;
+    pointer-events:none;
+    background:linear-gradient(180deg,transparent 0%,rgba(139,180,255,.08) 40%,rgba(177,157,255,.14) 70%,rgba(139,180,255,.06) 100%);
+    filter:blur(20px);
+    animation:auroraShift 12s ease-in-out infinite;
+  }
+  @keyframes auroraShift{
+    0%,100%{opacity:.7;transform:translateY(0)}
+    50%{opacity:1;transform:translateY(-10px)}
+  }
+
+  .wrap{max-width:1000px;margin:0 auto;position:relative}
+
+  /* ============================================================
+     GATE / CONSENT
+     ============================================================ */
+  .gate{
+    position:fixed;inset:0;z-index:9999;
+    background:rgba(5,8,20,.86);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    display:flex;align-items:center;justify-content:center;padding:22px;
+    animation:gateIn .4s ease;
+    overflow-y:auto;
+  }
+  @keyframes gateIn{from{opacity:0}to{opacity:1}}
+  .gate.closing{animation:gateOut .35s ease forwards}
+  @keyframes gateOut{to{opacity:0;transform:scale(.985)}}
+
+  .gate-box{
+    max-width:660px;width:100%;position:relative;
+    background:linear-gradient(180deg,rgba(35,45,88,.72),rgba(20,28,60,.78));
+    border:1px solid var(--line-strong);
+    border-radius:26px;padding:34px 32px 30px;
+    box-shadow:
+      0 40px 100px -30px rgba(0,0,0,.98),
+      0 0 0 1px rgba(139,180,255,.08),
+      0 0 80px -30px rgba(139,180,255,.4);
+    animation:boxIn .5s cubic-bezier(.2,.9,.3,1.1);
+    backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+    overflow:hidden;
+    margin:auto;
+  }
+  .gate-box::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,#8bb4ff,#b8e0ff,#e0a8ff,#8bb4ff);
+    background-size:200% 100%;
+    animation:slide 6s linear infinite;
+  }
+  @keyframes slide{to{background-position:200% 0}}
+  @keyframes boxIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+
+  .gate-logo-wrap{
+    display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:22px;
+    text-align:center;
+  }
+  .gate-logo{
+    width:82px;height:82px;object-fit:contain;
+    filter:drop-shadow(0 8px 28px rgba(139,180,255,.6));
+    animation:logoPulse 3s ease-in-out infinite;
+  }
+  @keyframes logoPulse{
+    0%,100%{transform:scale(1);filter:drop-shadow(0 8px 28px rgba(139,180,255,.6))}
+    50%{transform:scale(1.05);filter:drop-shadow(0 8px 38px rgba(224,168,255,.7))}
+  }
+  .gate-brand{
+    font-size:12px;font-weight:800;letter-spacing:3px;
+    background:linear-gradient(90deg,#8bb4ff,#b8e0ff,#e0a8ff);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:slide 4s linear infinite;
+    text-transform:uppercase;
+  }
+  .gate-title{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.2;margin-top:2px}
+  .gate-sub{font-size:12.5px;color:var(--muted);letter-spacing:.4px;font-weight:500}
+
+  .gate-body{font-size:14px;color:#cbd4ea;line-height:1.68}
+  .gate-body p{margin-bottom:12px}
+  .gate-body strong{color:#ffe9a8}
+
+  .warn-list{
+    background:linear-gradient(180deg,rgba(255,122,138,.06),rgba(255,122,138,.02));
+    border:1px solid rgba(255,122,138,.28);
+    border-radius:14px;padding:16px 18px 16px 20px;margin:16px 0 20px;list-style:none;
+    position:relative;overflow:hidden;
+  }
+  .warn-list::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,#ff7a8a,#ffc266);
+  }
+  .warn-list li{position:relative;padding-left:22px;margin:9px 0;font-size:13.5px;color:#ffc9cf;line-height:1.58}
+  .warn-list li::before{content:'▸';position:absolute;left:4px;color:var(--danger);font-weight:800}
+
+  .brand-strip{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    background:linear-gradient(90deg,rgba(139,180,255,.09),rgba(224,168,255,.09));
+    border:1px dashed rgba(180,200,255,.35);
+    border-radius:12px;padding:12px 14px;
+    font-size:12.5px;color:var(--muted);letter-spacing:.4px;
+    text-align:center;
+  }
+  .brand-strip b{
+    background:linear-gradient(90deg,#b8e0ff,#e0a8ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-weight:800;letter-spacing:1.2px;
+  }
+
+  .gate-ig{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    margin-top:14px;padding:12px 14px;
+    background:linear-gradient(90deg,rgba(240,148,51,.08),rgba(188,24,136,.08));
+    border:1px solid rgba(220,39,67,.35);
+    border-radius:12px;
+    text-decoration:none;
+    color:var(--text);
+    font-size:13px;
+    transition:.25s;
+  }
+  .gate-ig:hover{
+    background:linear-gradient(90deg,rgba(240,148,51,.16),rgba(188,24,136,.16));
+    border-color:rgba(220,39,67,.6);
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px -12px rgba(220,39,67,.5);
+  }
+  .gate-ig .ig-icon{width:22px;height:22px;flex-shrink:0}
+  .gate-ig .ig-text{display:flex;flex-direction:column;line-height:1.25}
+  .gate-ig .ig-label{font-size:10px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;font-weight:700}
+  .gate-ig .ig-user{
+    font-size:13.5px;font-weight:800;letter-spacing:.3px;
+    background:linear-gradient(90deg,#f09433,#dc2743,#bc1888);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  .gate-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+  .gate-actions button{flex:1;min-width:170px;justify-content:center}
+  .btn-agree{
+    background:linear-gradient(135deg,#8bb4ff,#5b8cff);color:#0a1230;
+    box-shadow:0 14px 34px -14px #8bb4ff;
+  }
+  .btn-agree:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 18px 40px -14px #8bb4ff}
+  .btn-disagree{
+    background:linear-gradient(135deg,#ff7a8a,#c93548);color:#fff;
+    box-shadow:0 14px 34px -14px #ff7a8a;
+  }
+  .btn-disagree:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 18px 40px -14px #ff7a8a}
+  .gate-foot{text-align:center;font-size:11.5px;color:var(--muted2);margin-top:18px;letter-spacing:.3px;line-height:1.6}
+
+  /* ============ EXIT ============ */
+  .exit-screen{
+    position:fixed;inset:0;z-index:10000;
+    background:radial-gradient(900px 500px at 50% 30%, #2a0f18, #05080f 70%);
+    display:flex;align-items:center;justify-content:center;padding:22px;
+    animation:gateIn .35s ease;
+  }
+  .exit-box{
+    text-align:center;max-width:540px;
+    background:linear-gradient(180deg,rgba(30,16,32,.92),rgba(20,28,60,.9));
+    border:1.5px solid rgba(255,122,138,.35);
+    border-radius:24px;padding:44px 32px;
+    box-shadow:0 40px 90px -30px rgba(255,122,138,.4);
+    backdrop-filter:blur(18px);
+  }
+  .exit-icon{font-size:68px;margin-bottom:18px;line-height:1}
+  .exit-box h2{font-size:25px;font-weight:800;color:#ffb8be;margin-bottom:14px;letter-spacing:-.4px}
+  .exit-box p{color:var(--muted);font-size:14.5px;line-height:1.7;margin-bottom:8px}
+  .exit-box small{color:var(--muted2);font-size:12px;display:block;margin-top:18px;letter-spacing:1.5px}
+
+  /* ============ HEADER ============ */
+  .main-app{transition:opacity .5s ease}
+  header{text-align:center;margin-bottom:34px;position:relative}
+
+  .header-logo{
+    width:96px;height:96px;object-fit:contain;margin:0 auto 16px;display:block;
+    filter:drop-shadow(0 12px 34px rgba(139,180,255,.55));
+    animation:logoFloat 5s ease-in-out infinite;
+  }
+  @keyframes logoFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-6px)}
+  }
+
+  .xdf-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:11.5px;font-weight:800;letter-spacing:2.2px;
+    background:linear-gradient(135deg,rgba(139,180,255,.18),rgba(224,168,255,.18));
+    border:1px solid rgba(180,200,255,.4);
+    padding:8px 18px;border-radius:999px;margin-bottom:18px;
+    text-transform:uppercase;
+    box-shadow:0 0 30px -10px rgba(139,180,255,.55), inset 0 0 20px -12px rgba(224,168,255,.4);
+    backdrop-filter:blur(10px);
+  }
+  .xdf-badge .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:radial-gradient(circle,#fff4d6,#ffe9a8);
+    box-shadow:0 0 14px #fff4d6; animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+  .xdf-badge span.txt{
+    background:linear-gradient(90deg,#b8e0ff,#e0a8ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  h1{
+    font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-1.2px;line-height:1.08;
+  }
+  h1 span{
+    background:linear-gradient(100deg,#8bb4ff 0%,#b8e0ff 40%,#e0a8ff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 6px 24px rgba(139,180,255,.4));
+  }
+  header > p{
+    color:var(--muted);margin-top:14px;font-size:15px;max-width:620px;
+    margin-left:auto;margin-right:auto;line-height:1.7;
+  }
+
+  .header-social{
+    display:flex;justify-content:center;gap:10px;margin-top:18px;flex-wrap:wrap;
+  }
+  .social-link{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 16px;border-radius:999px;
+    background:linear-gradient(135deg,rgba(240,148,51,.1),rgba(188,24,136,.1));
+    border:1px solid rgba(220,39,67,.35);
+    color:var(--text);text-decoration:none;
+    font-size:12.5px;font-weight:700;
+    transition:.25s;
+    backdrop-filter:blur(10px);
+    letter-spacing:.3px;
+  }
+  .social-link:hover{
+    background:linear-gradient(135deg,rgba(240,148,51,.22),rgba(188,24,136,.22));
+    border-color:rgba(220,39,67,.7);
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px -12px rgba(220,39,67,.6);
+  }
+  .social-link svg{width:16px;height:16px;flex-shrink:0}
+  .social-link .user{
+    background:linear-gradient(90deg,#f09433,#dc2743,#bc1888);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* ============ GLASS CARD ============ */
+  .card{
+    background:linear-gradient(180deg,rgba(35,45,88,.55),rgba(20,28,60,.6));
+    border:1px solid var(--line);
+    border-radius:22px;padding:26px;
+    box-shadow:
+      0 24px 60px -28px rgba(0,0,0,.9),
+      inset 0 1px 0 rgba(255,255,255,.06);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    position:relative;
+    overflow:hidden;
+  }
+  .card + .card{margin-top:20px}
+
+  .card.watermark::after{
+    content:'XDFAA TEAM.ID';
+    position:absolute;right:18px;bottom:12px;
+    font-size:10px;letter-spacing:3.5px;font-weight:800;
+    color:rgba(139,180,255,.28);
+    pointer-events:none;user-select:none;
+  }
+
+  /* ============ TABS ============ */
+  .tabs{
+    display:flex;gap:6px;padding:6px;
+    background:rgba(10,16,38,.6);
+    border:1px solid var(--line);
+    border-radius:16px;margin-bottom:22px;
+    backdrop-filter:blur(10px);
+    position:relative;overflow:hidden;
+  }
+  .tabs::before{
+    content:'';position:absolute;
+    top:6px;bottom:6px;left:6px;width:calc(50% - 6px);
+    background:linear-gradient(135deg,rgba(139,180,255,.22),rgba(224,168,255,.22));
+    border:1px solid rgba(180,200,255,.3);
+    border-radius:11px;
+    transition:transform .35s cubic-bezier(.4,.9,.3,1.1);
+    box-shadow:0 6px 20px -8px rgba(139,180,255,.5);
+    z-index:0;
+  }
+  .tabs.right::before{transform:translateX(100%)}
+  .tab{
+    flex:1;position:relative;z-index:1;
+    background:transparent;border:none;color:var(--muted);
+    font:inherit;font-weight:700;font-size:14px;
+    padding:13px 16px;border-radius:11px;cursor:pointer;
+    transition:color .25s;
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    white-space:nowrap;
+  }
+  .tab.active{color:var(--text)}
+  .tab .tab-icon{font-size:16px}
+
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .35s ease}
+
+  /* ============ INPUT ============ */
+  .field{display:flex;gap:12px;flex-wrap:wrap}
+  .input-wrap{position:relative;flex:1;min-width:240px}
+  .input-wrap::before{
+    content:'';position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    width:20px;height:20px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236d7ba0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='16' rx='2'/><line x1='7' y1='9' x2='17' y2='9'/><line x1='7' y1='13' x2='17' y2='13'/><line x1='7' y1='17' x2='13' y2='17'/></svg>");
+    background-size:contain;background-repeat:no-repeat;
+    pointer-events:none;opacity:.7;
+  }
+  input[type="text"]{
+    width:100%;background:rgba(10,16,38,.75);
+    border:1.5px solid var(--line-strong);color:var(--text);
+    font-size:22px;letter-spacing:5px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    padding:17px 18px 17px 50px;border-radius:15px;outline:none;transition:.22s;
+    font-weight:600;
+  }
+  input[type="text"]::placeholder{letter-spacing:2px;color:#5a6684;font-size:15px;font-family:inherit;font-weight:500}
+  input[type="text"]:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 5px rgba(139,180,255,.18), 0 0 30px -10px rgba(139,180,255,.6);
+    background:rgba(12,22,48,.9);
+  }
+  input[type="text"].valid{
+    border-color:var(--moon-glow);
+    box-shadow:0 0 0 5px rgba(255,233,168,.15), 0 0 30px -10px rgba(255,233,168,.5);
+  }
+  input[type="text"].invalid{
+    border-color:var(--danger);
+    box-shadow:0 0 0 5px rgba(255,122,138,.15);
+  }
+
+  button{
+    font:inherit;font-weight:700;border:none;border-radius:15px;
+    padding:17px 26px;cursor:pointer;
+    transition:.2s;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:9px;
+    letter-spacing:.2px;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,#8bb4ff,#5b8cff);color:#0a1230;
+    box-shadow:0 14px 34px -14px #8bb4ff, inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .btn-primary:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 18px 40px -14px #8bb4ff}
+  .btn-primary:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+  .btn-ghost{
+    background:rgba(40,52,92,.55);color:var(--text);
+    border:1.5px solid var(--line-strong);
+    backdrop-filter:blur(10px);
+  }
+  .btn-ghost:hover{background:rgba(50,64,110,.75);transform:translateY(-2px);border-color:rgba(180,200,255,.45)}
+  .btn-ig{
+    background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);color:#fff;
+    box-shadow:0 14px 34px -14px rgba(220,39,67,.6);
+  }
+  .btn-ig:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+  .hint{
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    font-size:12.5px;color:var(--muted);margin-top:14px;align-items:center;
+  }
+  .counter{
+    font-family:ui-monospace,monospace;font-weight:700;
+    padding:4px 12px;border-radius:999px;
+    background:rgba(20,28,58,.7);border:1px solid var(--line-strong);
+    transition:.25s;
+  }
+  .counter.ok{color:var(--moon-glow);border-color:rgba(255,233,168,.5);background:rgba(255,233,168,.08)}
+  .counter.bad{color:var(--danger);border-color:rgba(255,122,138,.4);background:rgba(255,122,138,.08)}
+  .counter.zero{color:var(--muted2)}
+
+  /* ============ GENERATOR FORM ============ */
+  .gen-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .gen-field{display:flex;flex-direction:column;gap:8px}
+  .gen-field.full{grid-column:1/-1}
+  .gen-field label{
+    font-size:11.5px;font-weight:700;letter-spacing:1.1px;
+    text-transform:uppercase;color:var(--muted);
+    display:flex;align-items:center;gap:8px;
+  }
+  .gen-field label::before{
+    content:'';width:5px;height:5px;border-radius:50%;
+    background:var(--moon-glow);
+    box-shadow:0 0 8px var(--moon-glow);
+  }
+  .gen-field select,
+  .gen-field input[type="date"],
+  .gen-field input[type="number"]{
+    width:100%;
+    background:rgba(10,16,38,.75);
+    border:1.5px solid var(--line-strong);
+    color:var(--text);
+    font:inherit;font-size:14.5px;font-weight:600;
+    padding:14px 16px;border-radius:13px;
+    outline:none;transition:.22s;
+    cursor:pointer;
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a8b4d8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 16px center;
+    padding-right:44px;
+  }
+  .gen-field input[type="date"]{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a8b4d8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/><line x1='3' y1='10' x2='21' y2='10'/></svg>");
+    background-position:right 16px center;
+    color-scheme:dark;
+  }
+  .gen-field select option{background:#1a2242;color:var(--text)}
+  .gen-field select:focus,
+  .gen-field input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 5px rgba(139,180,255,.18), 0 0 30px -10px rgba(139,180,255,.6);
+    background-color:rgba(12,22,48,.9);
+  }
+  .gen-field select:disabled{
+    opacity:.5;cursor:not-allowed;
+  }
+
+  .radio-group{
+    display:flex;gap:10px;
+  }
+  .radio-group label{
+    flex:1;
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    padding:14px 12px;
+    background:rgba(10,16,38,.75);
+    border:1.5px solid var(--line-strong);
+    border-radius:13px;
+    cursor:pointer;
+    transition:.22s;
+    font-size:14px;font-weight:700;
+    color:var(--muted);
+    text-transform:none;letter-spacing:0;
+  }
+  .radio-group label::before{display:none}
+  .radio-group label:hover{border-color:rgba(180,200,255,.4);color:var(--text)}
+  .radio-group input[type="radio"]{display:none}
+  .radio-group input[type="radio"]:checked + span{color:var(--text)}
+  .radio-group label:has(input:checked){
+    border-color:var(--accent);
+    background:linear-gradient(135deg,rgba(139,180,255,.16),rgba(224,168,255,.16));
+    color:var(--text);
+    box-shadow:0 0 22px -8px rgba(139,180,255,.6);
+  }
+  .radio-group label.male:has(input:checked){
+    border-color:#8bb4ff;
+    background:linear-gradient(135deg,rgba(139,180,255,.18),rgba(91,140,255,.18));
+  }
+  .radio-group label.female:has(input:checked){
+    border-color:#e0a8ff;
+    background:linear-gradient(135deg,rgba(224,168,255,.18),rgba(196,122,255,.18));
+  }
+  .radio-group .radio-icon{font-size:16px}
+
+  .gen-actions{
+    display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;
+  }
+  .gen-actions button{flex:1;min-width:180px;justify-content:center}
+
+  /* ============ GENERATED RESULT ============ */
+  .gen-result{
+    margin-top:22px;
+    padding:22px;
+    background:linear-gradient(135deg,rgba(40,55,110,.85),rgba(24,34,70,.85));
+    border:1.5px solid rgba(255,233,168,.4);
+    border-radius:18px;
+    box-shadow:
+      0 0 40px -20px rgba(255,233,168,.6),
+      inset 0 1px 0 rgba(255,255,255,.08);
+    animation:fade .45s cubic-bezier(.2,.9,.3,1);
+    position:relative;
+    overflow:hidden;
+  }
+  .gen-result::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,#ffe9a8,transparent);
+  }
+  .gen-result-head{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    flex-wrap:wrap;margin-bottom:14px;
+  }
+  .gen-result-head .title{
+    font-size:12.5px;font-weight:800;letter-spacing:2px;
+    text-transform:uppercase;
+    background:linear-gradient(90deg,#b8e0ff,#ffe9a8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .gen-nik{
+    font-family:ui-monospace,Menlo,monospace;
+    font-size:clamp(20px,4.4vw,30px);
+    font-weight:800;letter-spacing:5px;
+    color:var(--moon);
+    text-shadow:0 0 30px rgba(255,233,168,.6);
+    word-break:break-all;
+    line-height:1.3;
+    margin:8px 0 6px;
+  }
+  .gen-sub{
+    font-size:12.5px;color:var(--muted);letter-spacing:.3px;
+  }
+
+  /* ============ LOADING ============ */
+  .loading{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    padding:24px;color:var(--muted);font-size:14px;
+  }
+  .spinner{
+    width:22px;height:22px;border:2.5px solid var(--line-strong);
+    border-top-color:var(--accent);border-right-color:var(--accent2);
+    border-radius:50%;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ============ DIGITS ============ */
+  .digits{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 16px}
+  .seg{
+    font-family:ui-monospace,Menlo,monospace;font-size:20px;font-weight:800;
+    padding:12px 14px;border-radius:12px;letter-spacing:2.5px;
+    background:rgba(15,22,48,.75);border:1.5px solid var(--line-strong);
+    transition:.3s cubic-bezier(.2,.9,.3,1.2);
+    cursor:default;
+  }
+  .seg:hover{transform:translateY(-3px) scale(1.05)}
+  .seg.prov{color:var(--prov);border-color:#4460a8;background:rgba(20,32,68,.8);box-shadow:0 0 22px -8px var(--prov)}
+  .seg.kab{color:var(--kab);border-color:#6a5aa8;background:rgba(26,24,64,.8);box-shadow:0 0 22px -8px var(--kab)}
+  .seg.kec{color:var(--kec);border-color:#8a5aa8;background:rgba(32,22,60,.8);box-shadow:0 0 22px -8px var(--kec)}
+  .seg.dd{color:var(--dd);border-color:#a84070;background:rgba(48,20,40,.8);box-shadow:0 0 22px -8px var(--dd)}
+  .seg.mm{color:var(--mm);border-color:#a88040;background:rgba(46,36,20,.8);box-shadow:0 0 22px -8px var(--mm)}
+  .seg.yy{color:var(--yy);border-color:#3aa888;background:rgba(16,44,40,.8);box-shadow:0 0 22px -8px var(--yy)}
+  .seg.seq{color:#b8c3dd;border-color:#445080;background:rgba(24,32,58,.8)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+  .legend span{display:inline-flex;align-items:center;gap:7px;font-weight:500}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;box-shadow:0 0 10px currentColor}
+
+  /* ============ RESULT ============ */
+  .result-head{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    flex-wrap:wrap;margin-bottom:20px;padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+  .result-head h2{
+    font-size:19px;font-weight:800;letter-spacing:-.4px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .result-head h2::before{
+    content:'';width:5px;height:22px;border-radius:3px;
+    background:linear-gradient(180deg,#8bb4ff,#e0a8ff);
+    box-shadow:0 0 14px rgba(139,180,255,.7);
+  }
+  .badge{
+    font-size:11.5px;font-weight:800;padding:7px 16px;border-radius:999px;
+    letter-spacing:.7px;text-transform:uppercase;
+    backdrop-filter:blur(8px);
+  }
+  .badge.male{
+    background:rgba(139,180,255,.18);color:#c4d8ff;
+    border:1.5px solid rgba(139,180,255,.5);
+    box-shadow:0 0 24px -10px rgba(139,180,255,.7);
+  }
+  .badge.female{
+    background:rgba(224,168,255,.18);color:#ecc4ff;
+    border:1.5px solid rgba(224,168,255,.5);
+    box-shadow:0 0 24px -10px rgba(224,168,255,.7);
+  }
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .item{
+    background:linear-gradient(180deg,rgba(20,28,60,.85),rgba(15,22,48,.85));
+    border:1px solid var(--line);
+    border-radius:15px;padding:16px 18px;
+    transition:.25s cubic-bezier(.2,.9,.3,1.2);
+    position:relative;overflow:hidden;
+  }
+  .item::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+    opacity:0;transition:.3s;
+  }
+  .item:hover{
+    border-color:rgba(180,200,255,.4);
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px -20px rgba(139,180,255,.5);
+  }
+  .item:hover::before{opacity:1}
+
+  .item .label{
+    font-size:11px;text-transform:uppercase;letter-spacing:1.2px;
+    color:var(--muted);display:flex;align-items:center;gap:7px;
+    margin-bottom:8px;font-weight:700;
+  }
+  .item .label::before{
+    content:'';width:5px;height:5px;border-radius:50%;
+    background:var(--moon-glow);box-shadow:0 0 8px var(--moon-glow);
+  }
+  .item .value{
+    font-size:17px;font-weight:800;word-break:break-word;
+    letter-spacing:-.2px;line-height:1.3;
+  }
+  .item .sub{font-size:12.5px;color:var(--muted);margin-top:5px;font-weight:400}
+  .item.wide{grid-column:1/-1}
+  .item.highlight{
+    background:linear-gradient(135deg,rgba(40,55,110,.85),rgba(24,34,70,.85));
+    border-color:rgba(139,180,255,.45);
+    box-shadow:0 0 40px -20px rgba(139,180,255,.7), inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .value.accent{color:var(--yy);text-shadow:0 0 20px rgba(126,232,200,.45)}
+  .value.pink{color:var(--dd);text-shadow:0 0 20px rgba(255,168,200,.4)}
+  .value.blue{color:var(--accent);text-shadow:0 0 20px rgba(139,180,255,.45)}
+  .value.purple{color:var(--kec);text-shadow:0 0 20px rgba(224,168,255,.4)}
+  .value.green{color:var(--yy)}
+  .value.mono{font-family:ui-monospace,monospace;letter-spacing:2.5px}
+
+  /* ============ ALERT ============ */
+  .alert{
+    border-radius:15px;padding:17px 20px;font-size:14px;margin-top:18px;
+    border:1.5px solid;display:flex;gap:14px;align-items:flex-start;
+    backdrop-filter:blur(10px);
+  }
+  .alert-icon{font-size:22px;line-height:1;flex-shrink:0;filter:drop-shadow(0 0 10px currentColor)}
+  .alert-body{flex:1}
+  .alert strong{display:block;margin-bottom:6px;font-size:14.5px;letter-spacing:-.1px}
+  .alert.error{background:rgba(255,122,138,.08);border-color:rgba(255,122,138,.42);color:#ffb8be}
+  .alert.error strong{color:#ff8b95}
+  .alert.warn{background:rgba(255,194,102,.08);border-color:rgba(255,194,102,.4);color:#ffd9a0}
+  .alert.warn strong{color:#ffc266}
+  .alert.ok{background:rgba(126,232,200,.08);border-color:rgba(126,232,200,.4);color:#a8f0dd}
+  .alert.ok strong{color:#7ee8c8}
+  .alert ul{margin:8px 0 0 18px}
+  .alert li{margin:3px 0;font-size:13.5px}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+  /* ============ FOOTER ============ */
+  footer{
+    text-align:center;color:var(--muted2);font-size:12.5px;
+    margin-top:34px;line-height:1.9;
+  }
+  footer strong{color:var(--accent2)}
+
+  .footer-social{
+    display:flex;justify-content:center;gap:10px;margin-top:18px;
+    padding-top:18px;border-top:1px solid var(--line);
+  }
+
+  footer .xdf-line{
+    margin-top:16px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12px;letter-spacing:.7px;
+  }
+  footer .xdf-line b{
+    background:linear-gradient(90deg,#b8e0ff,#e0a8ff,#8bb4ff);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-weight:800;letter-spacing:2px;
+    animation:slide 5s linear infinite;
+  }
+
+  .hidden{display:none !important}
+  .fade-in{animation:fade .4s cubic-bezier(.2,.9,.3,1)}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  @media (max-width:540px){
+    body{padding:28px 12px 60px}
+    .card{padding:20px 18px;border-radius:18px}
+    .gate-box{padding:28px 22px;border-radius:22px}
+    .gate-actions{flex-direction:column}
+    .gate-actions button{width:100%}
+    .gen-actions{flex-direction:column}
+    .gen-actions button{width:100%}
+    .seg{font-size:16px;padding:9px 10px;letter-spacing:1.5px}
+    input[type="text"]{letter-spacing:3px;font-size:19px;padding:15px 16px 15px 46px}
+    .item .value{font-size:15.5px}
+    .header-logo{width:78px;height:78px}
+    .gate-logo{width:68px;height:68px}
+    .moon{width:80px;height:80px;top:40px;right:6%}
+    .shoot.s1,.shoot.s2,.shoot.s3{display:none}
+    .tab{font-size:13px;padding:12px 10px}
+    .gen-nik{letter-spacing:3px}
+  }
+</style>
+</head>
+<body>
+
+<!-- LANGIT -->
+<div class="sky" aria-hidden="true">
+  <div class="moon"></div>
+  <div class="stars" id="stars"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="shoot s1"></div>
+  <div class="shoot s2"></div>
+  <div class="shoot s3"></div>
+</div>
+<div class="aurora" aria-hidden="true"></div>
+<div class="mountains" aria-hidden="true"></div>
+
+<!-- ============================================================
+     GATE / CONSENT
+     ============================================================ -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <div class="gate-logo-wrap">
+      <img src="logo.png" alt="XDFAA TEAM.ID" class="gate-logo"
+           onerror="this.style.display='none'">
+      <div class="gate-brand">XDFAA TEAM.ID</div>
+      <div class="gate-title">Peringatan &amp; Persetujuan</div>
+      <div class="gate-sub">Baca sebelum melanjutkan</div>
+    </div>
+
+    <div class="gate-body">
+      <p>Aplikasi <strong>Identifikasi &amp; Generator NIK</strong> ini dibuat dan dikembangkan oleh <strong>XDFAA TEAM.ID</strong>. Sebelum masuk, Anda <strong>wajib membaca dan menyetujui</strong> peringatan berikut:</p>
+
+      <ul class="warn-list">
+        <li>Data NIK bersifat <strong>rahasia dan dilindungi undang-undang</strong> (UU No. 27 Tahun 2022 tentang PDP).</li>
+        <li>Aplikasi ini <strong>hanya untuk tujuan edukasi, verifikasi format, dan penelitian</strong>.</li>
+        <li><strong>Dilarang keras</strong> menggunakan NIK orang lain untuk penipuan, doxing, atau tindakan melanggar hukum.</li>
+        <li>Hasil <strong>generator NIK adalah contoh/simulasi</strong>, bukan NIK resmi dan tidak terdaftar di Dukcapil.</li>
+        <li>Segala <strong>penyalahgunaan data adalah tanggung jawab pengguna</strong>, bukan pembuat aplikasi.</li>
+        <li>Semua proses berjalan <strong>100% di browser</strong> — tidak ada data yang dikirim atau disimpan ke server.</li>
+      </ul>
+
+      <div class="brand-strip">🌙 Dipersembahkan oleh <b>XDFAA TEAM.ID</b> — gunakan dengan bijak &amp; bertanggung jawab</div>
+
+      <a class="gate-ig"
+         href="https://www.instagram.com/xdfaa_team.id?stkn=YmN2bXFraHF5YjM1"
+         target="_blank" rel="noopener noreferrer">
+        <svg class="ig-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="igGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f09433"/>
+              <stop offset="35%" stop-color="#e6683c"/>
+              <stop offset="60%" stop-color="#dc2743"/>
+              <stop offset="80%" stop-color="#cc2366"/>
+              <stop offset="100%" stop-color="#bc1888"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#igGrad1)" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4.6" stroke="url(#igGrad1)" stroke-width="1.8"/>
+          <circle cx="17.6" cy="6.4" r="1.15" fill="url(#igGrad1)"/>
+        </svg>
+        <div class="ig-text">
+          <span class="ig-label">Follow Instagram</span>
+          <span class="ig-user">@xdfaa_team.id</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="gate-actions">
+      <button class="btn-disagree" id="btnTidakSetuju">✖ Tidak Setuju</button>
+      <button class="btn-agree" id="btnSetuju">✓ Saya Setuju</button>
+    </div>
+
+    <div class="gate-foot">Dengan menekan "Saya Setuju", Anda menyatakan telah membaca dan menyetujui seluruh peringatan di atas.</div>
+  </div>
+</div>
+
+<!-- EXIT -->
+<div class="exit-screen hidden" id="exitScreen">
+  <div class="exit-box">
+    <div class="exit-icon">🚫</div>
+    <h2>Anda Tidak Menyetujui</h2>
+    <p>Anda menolak syarat &amp; ketentuan penggunaan aplikasi ini.</p>
+    <p>Silakan tutup halaman ini untuk keluar.</p>
+    <small>— XDFAA TEAM.ID —</small>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN APP
+     ============================================================ -->
+<div class="wrap main-app" id="mainApp" style="filter:blur(8px);opacity:.35;pointer-events:none;">
+
+  <header>
+    <img src="logo.png" alt="XDFAA TEAM.ID" class="header-logo"
+         onerror="this.style.display='none'">
+    <div class="xdf-badge">
+      <span class="dot"></span>
+      <span class="txt">XDFAA TEAM.ID</span>
+      <span style="color:var(--muted)">•</span>
+      <span style="color:var(--muted)">Moonlight Edition</span>
+    </div>
+    <h1>Identifikasi <span>&amp; Generator NIK</span></h1>
+    <p>Urai 16 digit NIK atau buat contoh NIK berdasarkan wilayah, tanggal lahir, dan jenis kelamin.</p>
+
+    <div class="header-social">
+      <a class="social-link"
+         href="https://www.instagram.com/xdfaa_team.id?stkn=YmN2bXFraHF5YjM1"
+         target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="igGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f09433"/>
+              <stop offset="35%" stop-color="#e6683c"/>
+              <stop offset="60%" stop-color="#dc2743"/>
+              <stop offset="80%" stop-color="#cc2366"/>
+              <stop offset="100%" stop-color="#bc1888"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#igGrad2)" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4.6" stroke="url(#igGrad2)" stroke-width="2"/>
+          <circle cx="17.6" cy="6.4" r="1.2" fill="url(#igGrad2)"/>
+        </svg>
+        <span>Follow</span>
+        <span class="user">@xdfaa_team.id</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <section class="card watermark">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="identifikasi">
+        <span class="tab-icon">🔍</span> Identifikasi NIK
+      </button>
+      <button class="tab" data-tab="generator">
+        <span class="tab-icon">🎲</span> Generator NIK
+      </button>
+    </div>
+
+    <!-- ============ PANEL IDENTIFIKASI ============ -->
+    <div class="panel active" id="panel-identifikasi">
+      <div class="field">
+        <div class="input-wrap">
+          <input id="nik" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="16" placeholder="Masukkan 16 digit NIK…">
+        </div>
+        <button class="btn-primary" id="btnProses" disabled><span>🔍</span> Identifikasi</button>
+        <button class="btn-ghost" id="btnContoh"><span>✨</span> Contoh</button>
+      </div>
+      <div class="hint">
+        <span>Hanya angka · tanpa spasi · tepat 16 digit</span>
+        <span class="counter zero" id="counter">0 / 16</span>
+      </div>
+    </div>
+
+    <!-- ============ PANEL GENERATOR ============ -->
+    <div class="panel" id="panel-generator">
+      <div class="gen-grid">
+        <div class="gen-field">
+          <label>Provinsi</label>
+          <select id="genProv"><option value="">— Pilih Provinsi —</option></select>
+        </div>
+        <div class="gen-field">
+          <label>Kabupaten / Kota</label>
+          <select id="genKab" disabled><option value="">— Pilih Kabupaten —</option></select>
+        </div>
+        <div class="gen-field">
+          <label>Kecamatan</label>
+          <select id="genKec" disabled><option value="">— Pilih Kecamatan —</option></select>
+        </div>
+
+        <div class="gen-field">
+          <label>Tanggal Lahir</label>
+          <input id="genDate" type="date" min="1900-01-01">
+        </div>
+
+        <div class="gen-field">
+          <label>Jenis Kelamin</label>
+          <div class="radio-group">
+            <label class="male">
+              <input type="radio" name="genJK" value="L" checked>
+              <span>👨</span> <span>Laki-laki</span>
+            </label>
+            <label class="female">
+              <input type="radio" name="genJK" value="P">
+              <span>👩</span> <span>Perempuan</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="gen-actions">
+        <button class="btn-primary" id="btnGenerate" disabled><span>⚡</span> Generate NIK</button>
+        <button class="btn-ghost" id="btnGenRandom"><span>🎰</span> Acak Cepat</button>
+        <button class="btn-ghost" id="btnGenReset"><span>↺</span> Reset</button>
+      </div>
+
+      <div id="genOut"></div>
+    </div>
+  </section>
+
+  <section id="loading" class="card hidden">
+    <div class="loading">
+      <div class="spinner"></div>
+      <span>Memuat basis data wilayah dari <b>data.json</b>…</span>
+    </div>
+  </section>
+
+  <section id="hasil"></section>
+
+  <footer>
+    🔒 Semua proses berjalan <strong>100% di browser Anda</strong>. Tidak ada data yang dikirim ke server.<br>
+    NIK dilindungi UU No. 27 Tahun 2022 (PDP) — gunakan dengan bijak dan bertanggung jawab.
+
+    <div class="footer-social">
+      <a class="social-link"
+         href="https://www.instagram.com/xdfaa_team.id?stkn=YmN2bXFraHF5YjM1"
+         target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="igGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f09433"/>
+              <stop offset="35%" stop-color="#e6683c"/>
+              <stop offset="60%" stop-color="#dc2743"/>
+              <stop offset="80%" stop-color="#cc2366"/>
+              <stop offset="100%" stop-color="#bc1888"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#igGrad3)" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4.6" stroke="url(#igGrad3)" stroke-width="2"/>
+          <circle cx="17.6" cy="6.4" r="1.2" fill="url(#igGrad3)"/>
+        </svg>
+        <span class="user">@xdfaa_team.id</span>
+      </a>
+    </div>
+
+    <div class="xdf-line">© 2025 · Dibuat &amp; dikembangkan oleh <b>XDFAA TEAM.ID</b></div>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   GENERATE BINTANG
+   ============================================================ */
+(function makeStars(){
+  const c = document.getElementById('stars');
+  const N = 90;
+  let html = '';
+  for (let i=0;i<N;i++){
+    const x = Math.random()*100;
+    const y = Math.random()*75;
+    const size = Math.random();
+    let cls = 'star';
+    if (size > 0.9) cls += ' big';
+    else if (size > 0.7) cls += ' gold';
+    else if (size > 0.4) cls += ' blue';
+    const dur = (2 + Math.random()*4).toFixed(2);
+    const delay = (Math.random()*5).toFixed(2);
+    const opacity = (0.3 + Math.random()*0.7).toFixed(2);
+    html += '<span class="'+cls+'" style="left:'+x+'%;top:'+y+'%;animation-duration:'+dur+'s;animation-delay:'+delay+'s;opacity:'+opacity+'"></span>';
+  }
+  c.innerHTML = html;
+})();
+
+/* ============================================================
+   GATE LOGIC
+   ============================================================ */
+const gate       = document.getElementById('gate');
+const exitScreen = document.getElementById('exitScreen');
+const mainApp    = document.getElementById('mainApp');
+const btnSetuju  = document.getElementById('btnSetuju');
+const btnTidak   = document.getElementById('btnTidakSetuju');
+
+function unlockApp(){
+  gate.classList.add('closing');
+  setTimeout(() => {
+    gate.remove();
+    mainApp.style.filter = 'none';
+    mainApp.style.opacity = '1';
+    mainApp.style.pointerEvents = 'auto';
+    if (typeof initApp === 'function') initApp();
+  }, 340);
+}
+function rejectApp(){
+  gate.classList.add('closing');
+  setTimeout(() => {
+    gate.remove();
+    exitScreen.classList.remove('hidden');
+    setTimeout(() => {
+      try { window.close(); } catch(e){}
+      document.body.innerHTML =
+        '<div class="exit-screen"><div class="exit-box">' +
+          '<div class="exit-icon">🌙</div>' +
+          '<h2>Sesi Diakhiri</h2>' +
+          '<p>Terima kasih. Anda dapat menutup tab ini sekarang.</p>' +
+          '<small>— XDFAA TEAM.ID —</small>' +
+        '</div></div>';
+    }, 1800);
+  }, 340);
+}
+btnSetuju.addEventListener('click', unlockApp);
+btnTidak.addEventListener('click', rejectApp);
+
+/* ============================================================
+   APP STATE
+   ============================================================ */
+const elNik     = document.getElementById('nik');
+const elCounter = document.getElementById('counter');
+const elHasil   = document.getElementById('hasil');
+const elLoading = document.getElementById('loading');
+const btnProses = document.getElementById('btnProses');
+const btnContoh = document.getElementById('btnContoh');
+
+const genProv      = document.getElementById('genProv');
+const genKab       = document.getElementById('genKab');
+const genKec       = document.getElementById('genKec');
+const genDate      = document.getElementById('genDate');
+const btnGenerate  = document.getElementById('btnGenerate');
+const btnGenRandom = document.getElementById('btnGenRandom');
+const btnGenReset  = document.getElementById('btnGenReset');
+const genOut       = document.getElementById('genOut');
+
+let DB = null;
+let DB_READY = false;
+let APP_STARTED = false;
+let LAST_GEN_NIK = '';
+
+/* ============================================================
+   LOAD DATA.JSON
+   ============================================================ */
+async function loadData(){
+  elLoading.classList.remove('hidden');
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    DB = await res.json();
+    if (!DB.provinsi || !DB.kabupaten || !DB.kecamatan || !DB.kodepos){
+      throw new Error('Struktur data.json tidak lengkap (butuh: provinsi, kabupaten, kecamatan, kodepos)');
+    }
+    DB_READY = true;
+    buildGeneratorDropdowns();
+  } catch (err) {
+    DB_READY = false;
+    elHasil.innerHTML =
+      '<section class="card fade-in watermark">' +
+        '<div class="alert error">' +
+          '<span class="alert-icon">⚠️</span>' +
+          '<div class="alert-body"><strong>Gagal memuat data.json</strong>' +
+          'Pastikan file <code>data.json</code> berada di folder yang sama dengan <code>index.html</code>, ' +
+          'lalu jalankan lewat server lokal (contoh: <code>python -m http.server 8000</code>) — bukan double-click file.<br>' +
+          '<span style="color:#ff8b95;font-size:12.5px">Error: ' + err.message + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
+  } finally {
+    elLoading.classList.add('hidden');
+  }
+}
+
+/* ============================================================
+   UTIL
+   ============================================================ */
+const pad2 = n => String(n).padStart(2,'0');
+const NAMA_BULAN = ["Januari","Februari","Maret","April","Mei","Juni",
+                    "Juli","Agustus","September","Oktober","November","Desember"];
+const HARI = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+
+function hitungUsia(tgl){
+  const now = new Date();
+  let y = now.getFullYear() - tgl.getFullYear();
+  let m = now.getMonth() - tgl.getMonth();
+  let d = now.getDate() - tgl.getDate();
+  if (d < 0){ m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+  if (m < 0){ y--; m += 12; }
+  return { tahun:y, bulan:m, hari:d };
+}
+
+/* ============================================================
+   VALIDASI & PARSER
+   ============================================================ */
+function validateLength(nik){
+  if (nik.length === 0)  return { ok:false, msg:'NIK masih kosong. Masukkan 16 digit angka.' };
+  if (nik.length < 16)   return { ok:false, msg:'NIK kurang dari 16 digit. Saat ini baru ' + nik.length + ' digit.' };
+  if (nik.length > 16)   return { ok:false, msg:'NIK lebih dari 16 digit. Saat ini ' + nik.length + ' digit.' };
+  if (!/^\d{16}$/.test(nik)) return { ok:false, msg:'NIK hanya boleh berisi angka (0–9).' };
+  return { ok:true };
+}
+
+function parseNIK(nik){
+  const out = { ok:false, errors:[], warnings:[] };
+  const lenCheck = validateLength(nik);
+  if (!lenCheck.ok){ out.errors.push(lenCheck.msg); return out; }
+
+  const kodeProv = nik.slice(0,2);
+  const kodeKab  = nik.slice(0,4);
+  const kodeKec  = nik.slice(0,6);
+  const kodeKecShort = nik.slice(4,6);
+  const rawDD    = parseInt(nik.slice(6,8), 10);
+  const mm       = parseInt(nik.slice(8,10), 10);
+  const yy       = parseInt(nik.slice(10,12), 10);
+  const seq      = nik.slice(12,16);
+
+  const provinsi  = DB.provinsi[kodeProv]   || null;
+  const kabupaten = DB.kabupaten[kodeKab]   || null;
+  const kecamatan = DB.kecamatan[kodeKec]   || null;
+  const kodepos   = DB.kodepos[kodeKec]     || null;
+
+  if (!provinsi){
+    out.warnings.push('Kode provinsi "' + kodeProv + '" tidak dikenali dalam basis data.');
+  } else if (!kabupaten){
+    out.warnings.push('Kode kabupaten/kota "' + kodeKab + '" tidak ditemukan — wilayah hanya dikenali sampai tingkat provinsi.');
+  } else if (!kecamatan){
+    out.warnings.push('Kode kecamatan "' + kodeKec + '" belum tersedia di basis data — wilayah dikenali sampai tingkat kabupaten/kota.');
+  }
+
+  let jenisKelamin, hari;
+  if (rawDD >= 1 && rawDD <= 31){ jenisKelamin = 'Laki-laki'; hari = rawDD; }
+  else if (rawDD >= 41 && rawDD <= 71){ jenisKelamin = 'Perempuan'; hari = rawDD - 40; }
+  else {
+    out.errors.push('Digit tanggal lahir ("' + pad2(rawDD) + '") tidak valid. Laki-laki: 01–31, Perempuan: 41–71.');
+    return out;
+  }
+
+  if (mm < 1 || mm > 12){
+    out.errors.push('Digit bulan lahir ("' + pad2(mm) + '") tidak valid. Harus 01–12.');
+    return out;
+  }
+
+  const nowYY = new Date().getFullYear() % 100;
+  const tahun = (yy <= nowYY) ? 2000 + yy : 1900 + yy;
+
+  const tgl = new Date(tahun, mm - 1, hari);
+  if (tgl.getFullYear() !== tahun || tgl.getMonth() !== mm - 1 || tgl.getDate() !== hari){
+    out.errors.push('Kombinasi tanggal ' + pad2(hari) + '-' + pad2(mm) + '-' + tahun + ' tidak ada dalam kalender.');
+    return out;
+  }
+  if (tgl > new Date()){
+    out.errors.push('Tanggal lahir berada di masa depan. Periksa kembali digit tanggal.');
+    return out;
+  }
+
+  out.ok = true;
+  out.data = {
+    nik, kodeProv, kodeKab, kodeKec, kodeKecShort,
+    provinsi:  provinsi  || 'Tidak dikenali',
+    kabupaten: kabupaten || 'Tidak ditemukan',
+    kecamatan: kecamatan || 'Tidak ditemukan',
+    kodepos:   kodepos   || '—',
+    hari, bulan:mm, tahun,
+    tanggalObj: tgl,
+    tanggalTeks: hari + ' ' + NAMA_BULAN[mm-1] + ' ' + tahun,
+    hariNama: HARI[tgl.getDay()],
+    jenisKelamin,
+    nomorUrut: seq,
+    usia: hitungUsia(tgl),
+    rawDD
+  };
+  return out;
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+const tabsEl = document.getElementById('tabs');
+tabsEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab');
+  if (!btn) return;
+  const target = btn.dataset.tab;
+  const allTabs = tabsEl.querySelectorAll('.tab');
+  allTabs.forEach(t => t.classList.toggle('active', t === btn));
+  tabsEl.classList.toggle('right', target === 'generator');
+  document.getElementById('panel-identifikasi').classList.toggle('active', target === 'identifikasi');
+  document.getElementById('panel-generator').classList.toggle('active', target === 'generator');
+});
+
+/* ============================================================
+   GENERATOR — BUILD DROPDOWNS
+   ============================================================ */
+function buildGeneratorDropdowns(){
+  if (!DB) return;
+
+  // Provinsi
+  const provCodes = Object.keys(DB.provinsi).sort();
+  genProv.innerHTML = '<option value="">— Pilih Provinsi —</option>' +
+    provCodes.map(k => `<option value="${k}">${DB.provinsi[k]} (${k})</option>`).join('');
+
+  // Set default date = 25 tahun lalu
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - 25);
+  genDate.value = d.toISOString().slice(0,10);
+  genDate.max   = new Date().toISOString().slice(0,10);
+
+  // Events
+  genProv.addEventListener('change', onProvChange);
+  genKab.addEventListener('change', onKabChange);
+  genKec.addEventListener('change', updateGenButton);
+  genDate.addEventListener('change', updateGenButton);
+  document.querySelectorAll('input[name="genJK"]').forEach(r => r.addEventListener('change', updateGenButton));
+
+  btnGenerate.addEventListener('click', doGenerate);
+  btnGenRandom.addEventListener('click', doRandomGenerate);
+  btnGenReset.addEventListener('click', resetGenerator);
+}
+
+function onProvChange(){
+  const p = genProv.value;
+  genKab.innerHTML = '<option value="">— Pilih Kabupaten —</option>';
+  genKec.innerHTML = '<option value="">— Pilih Kecamatan —</option>';
+  genKec.disabled = true;
+  if (!p){ genKab.disabled = true; updateGenButton(); return; }
+
+  const kabs = Object.keys(DB.kabupaten).filter(k => k.startsWith(p)).sort();
+  if (!kabs.length){ genKab.disabled = true; updateGenButton(); return; }
+
+  genKab.disabled = false;
+  genKab.innerHTML = '<option value="">— Pilih Kabupaten —</option>' +
+    kabs.map(k => `<option value="${k}">${DB.kabupaten[k]} (${k})</option>`).join('');
+  updateGenButton();
+}
+
+function onKabChange(){
+  const k = genKab.value;
+  genKec.innerHTML = '<option value="">— Pilih Kecamatan —</option>';
+  if (!k){ genKec.disabled = true; updateGenButton(); return; }
+
+  const kecs = Object.keys(DB.kecamatan).filter(kc => kc.startsWith(k)).sort();
+  if (!kecs.length){
+    genKec.disabled = true;
+    genKec.innerHTML = '<option value="">— Kecamatan belum tersedia —</option>';
+    updateGenButton();
+    return;
+  }
+  genKec.disabled = false;
+  genKec.innerHTML = '<option value="">— Pilih Kecamatan —</option>' +
+    kecs.map(kc => `<option value="${kc}">${DB.kecamatan[kc]} (${kc.slice(4)})</option>`).join('');
+  updateGenButton();
+}
+
+function updateGenButton(){
+  const valid = genProv.value && genKab.value && genKec.value && genDate.value;
+  btnGenerate.disabled = !valid;
+}
+
+/* ============================================================
+   GENERATOR — BUILD NIK
+   ============================================================ */
+function buildNIKFromForm(){
+  const kec  = genKec.value;                    // 6 digit
+  const dateVal = genDate.value;                // yyyy-mm-dd
+  const jkRadio = document.querySelector('input[name="genJK"]:checked');
+  const jk = jkRadio ? jkRadio.value : 'L';
+
+  if (!kec || !dateVal) return null;
+
+  const d = new Date(dateVal + 'T00:00:00');
+  if (isNaN(d.getTime())) return null;
+
+  const dd = d.getDate();
+  const mm = d.getMonth() + 1;
+  const yy = d.getFullYear() % 100;
+
+  let rawDD = dd;
+  if (jk === 'P') rawDD = dd + 40;
+
+  const seq = String(Math.floor(Math.random() * 9999) + 1).padStart(4,'0');
+
+  return kec + pad2(rawDD) + pad2(mm) + pad2(yy) + seq;
+}
+
+function doGenerate(){
+  const nik = buildNIKFromForm();
+  if (!nik) return;
+  renderGenerated(nik);
+}
+
+function doRandomGenerate(){
+  if (!DB) return;
+  const provCodes = Object.keys(DB.provinsi);
+  const p = provCodes[Math.floor(Math.random() * provCodes.length)];
+
+  let kabs = Object.keys(DB.kabupaten).filter(k => k.startsWith(p));
+  if (!kabs.length) kabs = Object.keys(DB.kabupaten);
+  const withKec = kabs.filter(kb => Object.keys(DB.kecamatan).some(kc => kc.startsWith(kb)));
+  const kab = withKec.length
+    ? withKec[Math.floor(Math.random() * withKec.length)]
+    : kabs[Math.floor(Math.random() * kabs.length)];
+
+  const kecs = Object.keys(DB.kecamatan).filter(kc => kc.startsWith(kab));
+  const kec = kecs.length ? kecs[Math.floor(Math.random() * kecs.length)] : (kab + '01');
+
+  const tahun = 1960 + Math.floor(Math.random() * 55);
+  const bulan = Math.floor(Math.random() * 12) + 1;
+  const hari  = Math.floor(Math.random() * 28) + 1;
+  const female = Math.random() < 0.5;
+  const rawDD = female ? hari + 40 : hari;
+  const seq = String(Math.floor(Math.random() * 9999) + 1).padStart(4,'0');
+
+  const nik = kec + pad2(rawDD) + pad2(bulan) + pad2(tahun % 100) + seq;
+
+  // sync ke form
+  genProv.value = p;
+  onProvChange();
+  genKab.value = kab;
+  onKabChange();
+  genKec.value = kec;
+  genDate.value = tahun + '-' + pad2(bulan) + '-' + pad2(hari);
+  document.querySelector('input[name="genJK"][value="' + (female ? 'P' : 'L') + '"]').checked = true;
+  updateGenButton();
+
+  renderGenerated(nik);
+}
+
+function resetGenerator(){
+  genProv.value = '';
+  genKab.innerHTML = '<option value="">— Pilih Kabupaten —</option>';
+  genKab.disabled = true;
+  genKec.innerHTML = '<option value="">— Pilih Kecamatan —</option>';
+  genKec.disabled = true;
+  document.querySelector('input[name="genJK"][value="L"]').checked = true;
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - 25);
+  genDate.value = d.toISOString().slice(0,10);
+  genOut.innerHTML = '';
+  LAST_GEN_NIK = '';
+  updateGenButton();
+}
+
+function renderGenerated(nik){
+  LAST_GEN_NIK = nik;
+  const res = parseNIK(nik);
+
+  if (!res.ok){
+    genOut.innerHTML =
+      '<div class="alert error">' +
+        '<span class="alert-icon">⚠️</span>' +
+        '<div class="alert-body"><strong>Gagal generate NIK</strong>' +
+          '<ul>' + res.errors.map(e => '<li>'+e+'</li>').join('') + '</ul>' +
+        '</div>' +
+      '</div>';
+    return;
+  }
+  const d = res.data;
+
+  genOut.innerHTML =
+    '<div class="gen-result">' +
+      '<div class="gen-result-head">' +
+        '<span class="title">✦ NIK Berhasil Di-generate ✦</span>' +
+        '<span class="badge ' + (d.jenisKelamin === 'Perempuan' ? 'female' : 'male') + '">' + d.jenisKelamin + '</span>' +
+      '</div>' +
+      '<div class="gen-nik">' + d.nik + '</div>' +
+      '<div class="gen-sub">' +
+        '📍 ' + d.kecamatan + ' · ' + d.kabupaten + ' · ' + d.provinsi + '<br>' +
+        '🎂 ' + d.tanggalTeks + ' · Kode Pos: ' + d.kodepos +
+      '</div>' +
+      '<div class="actions">' +
+        '<button class="btn-ghost" id="btnGenCopy">📋 Salin NIK</button>' +
+        '<button class="btn-primary" id="btnGenIdent">🔍 Identifikasi NIK Ini</button>' +
+      '</div>' +
+      '<p style="font-size:11.5px;color:var(--muted2);margin-top:14px;line-height:1.6">' +
+        '⚠️ NIK ini adalah <b style="color:#ffc266">simulasi/contoh</b>, bukan NIK resmi dan tidak terdaftar di Dukcapil. ' +
+        'Gunakan hanya untuk edukasi &amp; pengujian.' +
+      '</p>' +
+    '</div>';
+
+  document.getElementById('btnGenCopy').addEventListener('click', (e) => {
+    navigator.clipboard.writeText(d.nik).then(() => {
+      const b = e.currentTarget;
+      const old = b.innerHTML;
+      b.innerHTML = '✓ Tersalin!';
+      setTimeout(() => b.innerHTML = old, 1600);
+    }).catch(() => alert('Gagal menyalin.'));
+  });
+
+  document.getElementById('btnGenIdent').addEventListener('click', () => {
+    // pindah ke tab identifikasi & isi NIK
+    elNik.value = d.nik;
+    updateCounter();
+    document.querySelector('.tab[data-tab="identifikasi"]').click();
+    setTimeout(() => {
+      renderHasil(d.nik);
+      document.getElementById('hasil').scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 120);
+  });
+}
+
+/* ============================================================
+   RENDER HASIL IDENTIFIKASI
+   ============================================================ */
+function seg(cls, text, title){
+  return '<span class="seg ' + cls + '" title="' + (title||'') + '">' + text + '</span>';
+}
+
+function renderHasil(nik){
+  const res = parseNIK(nik);
+  const input = nik;
+
+  if (!res.ok){
+    elHasil.innerHTML =
+      '<section class="card fade-in watermark">' +
+        '<div class="alert error">' +
+          '<span class="alert-icon">✖</span>' +
+          '<div class="alert-body"><strong>NIK Invalid — XDFAA TEAM.ID</strong>' +
+            '<ul>' + res.errors.map(e => '<li>' + e + '</li>').join('') + '</ul>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
+    return;
+  }
+
+  const d = res.data;
+  const rawDD = d.rawDD;
+
+  const digitHTML =
+    '<div class="digits">' +
+      seg('prov', d.kodeProv, 'Kode Provinsi') +
+      seg('kab',  d.kodeKab.slice(2), 'Kode Kabupaten/Kota') +
+      seg('kec',  d.kodeKecShort, 'Kode Kecamatan') +
+      seg('dd',   input.slice(6,8), 'Tanggal (raw)') +
+      seg('mm',   input.slice(8,10), 'Bulan') +
+      seg('yy',   input.slice(10,12), 'Tahun') +
+      seg('seq',  d.nomorUrut, 'Nomor Urut') +
+    '</div>' +
+    '<div class="legend">' +
+      '<span><i style="background:var(--prov);color:var(--prov)"></i>Provinsi</span>' +
+      '<span><i style="background:var(--kab);color:var(--kab)"></i>Kab/Kota</span>' +
+      '<span><i style="background:var(--kec);color:var(--kec)"></i>Kecamatan</span>' +
+      '<span><i style="background:var(--dd);color:var(--dd)"></i>Tanggal</span>' +
+      '<span><i style="background:var(--mm);color:var(--mm)"></i>Bulan</span>' +
+      '<span><i style="background:var(--yy);color:var(--yy)"></i>Tahun</span>' +
+      '<span><i style="background:var(--seq);color:var(--seq)"></i>No. Urut</span>' +
+    '</div>';
+
+  const badgeClass = d.jenisKelamin === 'Perempuan' ? 'female' : 'male';
+
+  let warnHTML = '';
+  if (res.warnings.length){
+    warnHTML = '<div class="alert warn">' +
+      '<span class="alert-icon">⚠️</span>' +
+      '<div class="alert-body"><strong>Catatan Wilayah</strong>' +
+        '<ul>' + res.warnings.map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+      '</div></div>';
+  }
+
+  elHasil.innerHTML =
+    '<section class="card fade-in watermark">' +
+      '<div class="result-head">' +
+        '<h2>Hasil Identifikasi</h2>' +
+        '<span class="badge ' + badgeClass + '">' + d.jenisKelamin + '</span>' +
+      '</div>' +
+
+      digitHTML +
+
+      '<div class="grid">' +
+        '<div class="item wide highlight">' +
+          '<span class="label">Nomor Induk Kependudukan</span>' +
+          '<span class="value mono">' + d.nik + '</span>' +
+          '<span class="sub">16 digit terverifikasi · XDFAA TEAM.ID</span>' +
+        '</div>' +
+
+        '<div class="item wide">' +
+          '<span class="label">Provinsi</span>' +
+          '<span class="value blue">' + d.provinsi + '</span>' +
+          '<span class="sub">Kode: ' + d.kodeProv + '</span>' +
+        '</div>' +
+
+        '<div class="item wide">' +
+          '<span class="label">Kabupaten / Kota</span>' +
+          '<span class="value">' + d.kabupaten + '</span>' +
+          '<span class="sub">Kode: ' + d.kodeKab + '</span>' +
+        '</div>' +
+
+        '<div class="item wide">' +
+          '<span class="label">Kecamatan</span>' +
+          '<span class="value purple">' + d.kecamatan + '</span>' +
+          '<span class="sub">Kode: ' + d.kodeKec + '</span>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<span class="label">Kode Pos</span>' +
+          '<span class="value green mono">' + d.kodepos + '</span>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<span class="label">Tanggal Lahir</span>' +
+          '<span class="value pink">' + d.tanggalTeks + '</span>' +
+          '<span class="sub">' + d.hariNama + '</span>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<span class="label">Jenis Kelamin</span>' +
+          '<span class="value">' + d.jenisKelamin + '</span>' +
+          '<span class="sub">' +
+            (d.jenisKelamin === 'Perempuan'
+              ? 'DD asli ' + pad2(d.hari) + ' + 40 = ' + rawDD
+              : 'DD asli ' + rawDD) +
+          '</span>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<span class="label">Usia</span>' +
+          '<span class="value accent">' + d.usia.tahun + ' thn ' + d.usia.bulan + ' bln</span>' +
+          '<span class="sub">' + d.usia.hari + ' hari (per hari ini)</span>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<span class="label">Nomor Urut Penerbitan</span>' +
+          '<span class="value mono">' + d.nomorUrut + '</span>' +
+        '</div>' +
+      '</div>' +
+
+      warnHTML +
+
+      '<div class="alert ok">' +
+        '<span class="alert-icon">✓</span>' +
+        '<div class="alert-body"><strong>Struktur NIK valid</strong>' +
+        '16 digit, format tanggal lahir konsisten, dan kode wilayah berhasil dipetakan.</div>' +
+      '</div>' +
+
+      '<div class="actions">' +
+        '<button class="btn-ghost" id="btnCopy">📋 Salin Hasil</button>' +
+        '<button class="btn-ghost" id="btnReset">↺ Bersihkan</button>' +
+      '</div>' +
+
+      '<p style="font-size:12px;color:var(--muted2);margin-top:18px;line-height:1.65">' +
+        'Catatan: pemetaan wilayah menggunakan kode BPS dan mungkin belum mencakup seluruh daerah pemekaran terbaru. ' +
+        'NIK tidak memiliki digit checksum publik, sehingga validitas format tidak menjamin NIK terdaftar resmi di Dukcapil. ' +
+        '<br><b style="color:#c4d8ff">— XDFAA TEAM.ID —</b>' +
+      '</p>' +
+    '</section>';
+
+  document.getElementById('btnCopy').addEventListener('click', () => {
+    const teks =
+      '╔══════════════════════════════════════╗\n' +
+      '║   HASIL IDENTIFIKASI NIK             ║\n' +
+      '║   by XDFAA TEAM.ID                   ║\n' +
+      '╚══════════════════════════════════════╝\n' +
+      'NIK            : ' + d.nik + '\n' +
+      'Provinsi       : ' + d.provinsi + ' (' + d.kodeProv + ')\n' +
+      'Kabupaten/Kota : ' + d.kabupaten + ' (' + d.kodeKab + ')\n' +
+      'Kecamatan      : ' + d.kecamatan + ' (' + d.kodeKec + ')\n' +
+      'Kode Pos       : ' + d.kodepos + '\n' +
+      'Tanggal Lahir  : ' + d.tanggalTeks + ' (' + d.hariNama + ')\n' +
+      'Jenis Kelamin  : ' + d.jenisKelamin + '\n' +
+      'Usia           : ' + d.usia.tahun + ' tahun ' + d.usia.bulan + ' bulan\n' +
+      'Nomor Urut     : ' + d.nomorUrut + '\n' +
+      '──────────────────────────────────────\n' +
+      '© XDFAA TEAM.ID · Gunakan dengan bijak';
+
+    navigator.clipboard.writeText(teks).then(() => {
+      const b = document.getElementById('btnCopy');
+      const old = b.innerHTML;
+      b.innerHTML = '✓ Tersalin!';
+      setTimeout(() => b.innerHTML = old, 1600);
+    }).catch(() => alert('Gagal menyalin. Silakan salin manual.'));
+  });
+
+  document.getElementById('btnReset').addEventListener('click', reset);
+}
+
+/* ============================================================
+   STATE UI
+   ============================================================ */
+function updateCounter(){
+  const len = elNik.value.length;
+  elCounter.textContent = len + ' / 16';
+
+  let cls = 'counter zero';
+  if (len > 0 && len < 16) cls = 'counter bad';
+  else if (len === 16)     cls = 'counter ok';
+  elCounter.className = cls;
+
+  elNik.classList.remove('valid','invalid');
+  if (len > 0 && len < 16) elNik.classList.add('invalid');
+  if (len === 16)          elNik.classList.add('valid');
+
+  btnProses.disabled = !(DB_READY && len === 16);
+}
+
+function reset(){
+  elNik.value = '';
+  elHasil.innerHTML = '';
+  updateCounter();
+  elNik.focus();
+}
+
+/* ============================================================
+   EVENTS IDENTIFIKASI
+   ============================================================ */
+elNik.addEventListener('input', () => {
+  elNik.value = elNik.value.replace(/\D/g, '').slice(0,16);
+  updateCounter();
+  elHasil.innerHTML = '';
+});
+
+elNik.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !btnProses.disabled) btnProses.click();
+});
+
+btnProses.addEventListener('click', () => {
+  if (!DB_READY) return;
+  renderHasil(elNik.value);
+  document.getElementById('hasil').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+btnContoh.addEventListener('click', () => {
+  if (!DB_READY) return;
+
+  const provCodes = Object.keys(DB.provinsi);
+  const p = provCodes[Math.floor(Math.random() * provCodes.length)];
+
+  let kabs = Object.keys(DB.kabupaten).filter(k => k.startsWith(p));
+  let kab;
+  if (kabs.length){
+    const withKec = kabs.filter(kb => Object.keys(DB.kecamatan).some(kc => kc.startsWith(kb)));
+    kab = withKec.length ? withKec[Math.floor(Math.random() * withKec.length)]
+                         : kabs[Math.floor(Math.random() * kabs.length)];
+  } else {
+    kab = p + '01';
+  }
+
+  const kecs = Object.keys(DB.kecamatan).filter(kc => kc.startsWith(kab));
+  const kec  = kecs.length ? kecs[Math.floor(Math.random() * kecs.length)] : (kab + '01');
+  const kecShort = kec.slice(4,6);
+
+  const tahun = 1970 + Math.floor(Math.random() * 50);
+  const bulan = Math.floor(Math.random() * 12) + 1;
+  const hari  = Math.floor(Math.random() * 28) + 1;
+  const female = Math.random() < 0.5;
+  const dd = female ? hari + 40 : hari;
+  const seq = String(Math.floor(Math.random() * 9999) + 1).padStart(4,'0');
+
+  elNik.value = p + kab.slice(2) + kecShort + pad2(dd) + pad2(bulan) + pad2(tahun % 100) + seq;
+  updateCounter();
+  renderHasil(elNik.value);
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+async function initApp(){
+  if (APP_STARTED) return;
+  APP_STARTED = true;
+  updateCounter();
+  await loadData();
+  updateCounter();
+  elNik.focus();
+}
+</script>
+</body>
+</html>
